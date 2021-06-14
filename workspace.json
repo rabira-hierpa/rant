@@ -1,0 +1,129 @@
+{
+  "version": 2,
+  "cli": {
+    "defaultCollection": "@nrwl/react"
+  },
+  "defaultProject": "rant-web",
+  "generators": {
+    "@nrwl/react": {
+      "application": {
+        "style": "scss",
+        "linter": "eslint",
+        "strict": true,
+        "babel": true
+      },
+      "component": {
+        "style": "scss"
+      },
+      "library": {
+        "style": "scss",
+        "linter": "eslint",
+        "strict": true
+      }
+    }
+  },
+  "projects": {
+    "rant-web": {
+      "root": "apps/rant-web",
+      "sourceRoot": "apps/rant-web/src",
+      "projectType": "application",
+      "targets": {
+        "build": {
+          "executor": "@nrwl/web:build",
+          "outputs": ["{options.outputPath}"],
+          "options": {
+            "outputPath": "dist/apps/rant-web",
+            "index": "apps/rant-web/src/index.html",
+            "main": "apps/rant-web/src/main.tsx",
+            "polyfills": "apps/rant-web/src/polyfills.ts",
+            "tsConfig": "apps/rant-web/tsconfig.app.json",
+            "assets": [
+              "apps/rant-web/src/favicon.ico",
+              "apps/rant-web/src/assets"
+            ],
+            "styles": ["apps/rant-web/src/styles.scss"],
+            "scripts": [],
+            "webpackConfig": "@nrwl/react/plugins/webpack"
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "apps/rant-web/src/environments/environment.ts",
+                  "with": "apps/rant-web/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "500kb",
+                  "maximumError": "1mb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "executor": "@nrwl/web:dev-server",
+          "options": {
+            "buildTarget": "rant-web:build",
+            "hmr": true
+          },
+          "configurations": {
+            "production": {
+              "buildTarget": "rant-web:build:production",
+              "hmr": false
+            }
+          }
+        },
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["apps/rant-web/**/*.{ts,tsx,js,jsx}"]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": ["coverage/apps/rant-web"],
+          "options": {
+            "jestConfig": "apps/rant-web/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "rant-web-e2e": {
+      "root": "apps/rant-web-e2e",
+      "sourceRoot": "apps/rant-web-e2e/src",
+      "projectType": "application",
+      "targets": {
+        "e2e": {
+          "executor": "@nrwl/cypress:cypress",
+          "options": {
+            "cypressConfig": "apps/rant-web-e2e/cypress.json",
+            "tsConfig": "apps/rant-web-e2e/tsconfig.e2e.json",
+            "devServerTarget": "rant-web:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "rant-web:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["apps/rant-web-e2e/**/*.{js,ts}"]
+          }
+        }
+      }
+    }
+  }
+}
