@@ -5,6 +5,7 @@
   "scripts": {
     "nx": "nx",
     "start": "nx serve",
+    "start-rant-web": "nx run rant-web:serve",
     "build": "nx build",
     "test": "nx test",
     "lint": "nx workspace-lint && nx lint",
@@ -21,12 +22,15 @@
     "format:write": "nx format:write",
     "format:check": "nx format:check",
     "update": "nx migrate latest",
+    "tailwind:rant-web:dev": "npx tailwindcss-cli@latest build  styles/tailwind.css -o apps/rant-web/src/styles/tailwind.dev.css -c  apps/rant-web/tailwind.config.js ",
+    "tailwind:rant-web:prod": "cross-env NODE_ENV=production npx tailwindcss-cli@latest build  styles/tailwind.css  -c  apps/rant-web/tailwind.config.js  -o apps/rant-web/src/styles/tailwind.prod.css",
     "workspace-generator": "nx workspace-generator",
     "dep-graph": "nx dep-graph",
     "help": "nx help"
   },
   "private": true,
   "dependencies": {
+    "antd": "^4.16.2",
     "core-js": "^3.6.5",
     "document-register-element": "1.13.1",
     "react": "17.0.2",
@@ -55,6 +59,7 @@
     "@types/react-dom": "17.0.3",
     "@typescript-eslint/eslint-plugin": "4.19.0",
     "@typescript-eslint/parser": "4.19.0",
+    "autoprefixer": "^10.2.6",
     "babel-jest": "26.2.2",
     "cypress": "^7.3.0",
     "dotenv": "8.2.0",
@@ -66,7 +71,9 @@
     "eslint-plugin-react": "7.23.1",
     "eslint-plugin-react-hooks": "4.2.0",
     "jest": "26.2.2",
+    "postcss": "^8.3.4",
     "prettier": "2.2.1",
+    "tailwindcss": "^2.1.4",
     "ts-jest": "26.5.5",
     "ts-node": "~9.1.1",
     "typescript": "~4.2.4"

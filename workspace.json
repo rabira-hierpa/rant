@@ -70,11 +70,87 @@
             }
           }
         },
-        "serve": {
+        "postBuild": {
+          "executor": "@nrwl/web:build",
+          "options": {
+            "outputPath": "dist/apps/rant-web",
+            "index": "apps/rant-web/src/index.html",
+            "main": "apps/rant-web/src/main.tsx",
+            "polyfills": "apps/rant-web/src/polyfills.ts",
+            "tsConfig": "apps/rant-web/tsconfig.app.json",
+            "assets": ["apps/rant-web/src/assets"],
+            "styles": ["apps/rant-web/src/styles.scss"],
+            "scripts": [],
+            "webpackConfig": "@nrwl/react/plugins/webpack"
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "apps/web/challenge/src/environments/environment.ts",
+                  "with": "apps/web/challenge/src/environments/environment.prod.ts"
+                },
+                {
+                  "replace": "apps/web/challenge/src/styles/tailwind.css",
+                  "with": "apps/web/challenge/src/styles/tailwind.prod.css"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                }
+              ]
+            },
+            "development": {
+              "fileReplacements": [
+                {
+                  "replace": "apps/web/rant-web/src/environments/environment.ts",
+                  "with": "apps/web/rant-web/src/environments/environment.dev.ts"
+                },
+                {
+                  "replace": "apps/web/rant-web/src/styles/tailwind.css",
+                  "with": "apps/web/rant-web/src/styles/tailwind.dev.css"
+                }
+              ],
+              "optimization": false,
+              "sourceMap": true
+            }
+          }
+        },
+        "postServe": {
           "executor": "@nrwl/web:dev-server",
           "options": {
-            "buildTarget": "rant-web:build",
-            "hmr": true
+            "buildTarget": "rant-web:postBuild",
+            "port": 4000,
+            "host": "0.0.0.0"
+          },
+          "configurations": {
+            "production": {
+              "buildTarget": "rant-web:postBuild:production"
+            },
+            "development": {
+              "buildTarget": "rant-web:postBuild:development"
+            }
+          }
+        },
+        "serve": {
+          "executor": "@nrwl/workspace:run-commands",
+          "options": {
+            "commands": [
+              "npm run tailwind:rant-web:dev",
+              "nx run rant-web:postServe --configuration=development"
+            ],
+            "hmr": true,
+            "liveReload": true
           },
           "configurations": {
             "production": {
