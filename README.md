@@ -1,4 +1,4 @@
-# `:tada:` __RANT__
+#  __RANT__
 
 ![RANT LOGO](assets/rant-logo.png)
 ### REAT - ANT Design - Nest.js - Tailwindcss 
