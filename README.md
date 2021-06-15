@@ -230,6 +230,8 @@ touch tailwind.dev.css
 `"start-ecsp-web": "nx run rant-web:serve",`
 
 10. Import tailwindcss and antd into your __main.tsx__ file of your app (rant-web)
+
+
 `import 'antd/dist/antd.css';`
 
 `import './styles/tailwind.css; `
