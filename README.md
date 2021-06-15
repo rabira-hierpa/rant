@@ -231,6 +231,7 @@ touch tailwind.dev.css
 
 10. Import tailwindcss and antd into your __main.tsx__ file of your app (rant-web)
 `import 'antd/dist/antd.css';`
+
 `import './styles/tailwind.css; `
 
 ## Further help
