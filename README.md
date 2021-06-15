@@ -88,7 +88,14 @@ Run `nx dep-graph` to see a diagram of the dependencies of your projects.
 
 ```bash
 mkdir styles
+cd styles
 touch tailwind.css
+```
+and add the following code inside __tailwind.css__
+```javascript
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 ```
 
 4. Create a new sytles folder in the root directory of your apps (e.g apps/rant-web)
