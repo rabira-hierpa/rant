@@ -61,7 +61,7 @@ touch tailwind.dev.css
             }
           }
         },
-  ...
+  
 }
 ```
 
@@ -142,7 +142,7 @@ touch tailwind.dev.css
       "npm run tailwind:rant-web:dev",
       "nx run rant-web:postServe --configuration=development"
     ],
-    "hmr": true, # Hot Module Replacement
+    "hmr": true, 
   }
   
 }
