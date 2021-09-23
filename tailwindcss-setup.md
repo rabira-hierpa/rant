@@ -1,1 +1,159 @@
-# Nx React TailwindCSS Setup
+# Nx React TailwindCSS Setup 
+
+1. Create Nx workspace with react preset
+   `npx create-nx-workspace --preset=react`
+
+2. Install Tailwindcss
+   `npm install -D tailwindcss@latest postcss@latest autoprefixer@latest `
+
+3. Create a new style folder in the root directory of your nx project
+
+```bash
+mkdir styles
+cd styles
+touch tailwind.css
+```
+and add the following code inside __tailwind.css__
+```javascript
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+```
+
+4. Create a new sytles folder in the root directory of your apps (e.g apps/rant-web)
+
+```bash
+cd apps/rant-web
+mkdir styles
+touch tailwind.dev.css
+```
+
+5. Define tailwind build in your project **package.json** file (repace "rant-web" with your app name)
+
+```json
+{
+  
+  "tailwind:rant-web:dev": "npx tailwindcss-cli@latest build  styles/tailwind.css -o apps/rant-web/src/styles/tailwind.dev.css -c  apps/rant-web/tailwind.config.js ",
+  "tailwind:rant-web:prod": "cross-env NODE_ENV=production npx tailwindcss-cli@latest build  styles/tailwind.css  -c  apps/rant-web/tailwind.config.js  -o apps/rant-web/src/styles/tailwind.prod.css"
+  
+}
+```
+
+6. Add a custom command to enable nx host your app (e.g rant-web) to a specified port,and expose server to local network
+   inside **workspace.json** file
+
+```json
+{
+  
+  "postServe": {
+          "executor": "@nrwl/web:dev-server",
+          "options": {
+            "buildTarget": "rant-web:postBuild",
+            "port": 4000,
+            "host": "0.0.0.0"
+          },
+          "configurations": {
+            "production": {
+              "buildTarget": "rant-web:postBuild:production"
+            },
+            "development": {
+              "buildTarget": "rant-web:postBuild:development"
+            }
+          }
+        },
+  ...
+}
+```
+
+7. Add a postBuild option to server you app(rant-web) inside your **workspace.json** file
+
+> Path - "projects" > "rant-web" > "targets"
+
+```json
+{
+  
+   "postBuild": {
+          "executor": "@nrwl/web:build",
+          "options": {
+            "outputPath": "dist/apps/rant-web",
+            "index": "apps/rant-web/src/index.html",
+            "main": "apps/rant-web/src/main.tsx",
+            "polyfills": "apps/rant-web/src/polyfills.ts",
+            "tsConfig": "apps/rant-web/tsconfig.app.json",
+            "assets": ["apps/rant-web/src/assets"],
+            "styles": ["apps/rant-web/src/styles.scss"],
+            "scripts": [],
+            "webpackConfig": "@nrwl/react/plugins/webpack"
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "apps/web/challenge/src/environments/environment.ts",
+                  "with": "apps/web/challenge/src/environments/environment.prod.ts"
+                },
+                {
+                  "replace": "apps/web/challenge/src/styles/tailwind.css",
+                  "with": "apps/web/challenge/src/styles/tailwind.prod.css"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                }
+              ]
+            },
+            "development": {
+              "fileReplacements": [
+                {
+                  "replace": "apps/web/rant-web/src/environments/environment.ts",
+                  "with": "apps/web/rant-web/src/environments/environment.dev.ts"
+                },
+                {
+                  "replace": "apps/web/rant-web/src/styles/tailwind.css",
+                  "with": "apps/web/rant-web/src/styles/tailwind.dev.css"
+                }
+              ],
+              "optimization": false,
+              "sourceMap": true
+            }
+          }
+        },
+  
+}
+```
+
+8. Modify your serve command in your **workspace.json** file to build your tailwind every time you run your project
+
+```json
+{
+  
+  "options": {
+    "commands": [
+      "npm run tailwind:rant-web:dev",
+      "nx run rant-web:postServe --configuration=development"
+    ],
+    "hmr": true, # Hot Module Replacement
+  }
+  
+}
+```
+9. Finally add a script in __package.json__ to start your dev server
+
+`"start-ecsp-web": "nx run rant-web:serve",`
+
+10. Import tailwindcss and antd into your __main.tsx__ file of your app (rant-web)
+
+
+`import 'antd/dist/antd.css';`
+
+`import './styles/tailwind.css; `
