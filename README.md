@@ -4,7 +4,7 @@
 ### REAT - ANT Design - Nest.js - Tailwindcss 
 ---
 
-> Boilerplate for building ERP systems using MERN/PERN. Generated using [Nx](https://nx.dev).
+> Boilerplate for building Web Apps using MERN/PERN. Generated using [Nx](https://nx.dev).
 
 
 🔎 **Smart, Extensible Build Framework**
