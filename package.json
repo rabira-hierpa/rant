@@ -7,6 +7,7 @@
     "start": "nx serve",
     "start-rant-web": "nx run rant-web:serve",
     "build": "nx build",
+    "build-rant-web": "cross-env NODE_ENV=production nx run rant-web:build",
     "test": "nx test",
     "lint": "nx workspace-lint && nx lint",
     "e2e": "nx e2e",
@@ -22,8 +23,8 @@
     "format:write": "nx format:write",
     "format:check": "nx format:check",
     "update": "nx migrate latest",
-    "tailwind:rant-web:dev": "npx tailwindcss-cli@latest build  styles/tailwind.css -o apps/rant-web/src/styles/tailwind.dev.css -c  apps/rant-web/tailwind.config.js ",
-    "tailwind:rant-web:prod": "cross-env NODE_ENV=production npx tailwindcss-cli@latest build  styles/tailwind.css  -c  apps/rant-web/tailwind.config.js  -o apps/rant-web/src/styles/tailwind.prod.css",
+    "tailwind:rant-web:dev": "npx tailwindcss-cli@latest build -i  styles/tailwind.css -o apps/rant-web/src/styles/tailwind.dev.css -c  apps/rant-web/tailwind.config.js ",
+    "tailwind:rant-web:prod": "cross-env NODE_ENV=production npx tailwindcss-cli@latest build -i styles/tailwind.css  -c  apps/rant-web/tailwind.config.js  -o apps/rant-web/src/styles/tailwind.prod.css",
     "workspace-generator": "nx workspace-generator",
     "dep-graph": "nx dep-graph",
     "help": "nx help"
@@ -32,6 +33,7 @@
   "dependencies": {
     "antd": "^4.16.2",
     "core-js": "^3.6.5",
+    "cross-env": "^7.0.3",
     "document-register-element": "1.13.1",
     "react": "17.0.2",
     "react-dom": "17.0.2",
@@ -48,6 +50,7 @@
     "@nrwl/eslint-plugin-nx": "12.3.6",
     "@nrwl/jest": "12.3.6",
     "@nrwl/linter": "12.3.6",
+    "@nrwl/nest": "^13.4.6",
     "@nrwl/react": "12.3.6",
     "@nrwl/tao": "12.3.6",
     "@nrwl/web": "12.3.6",
@@ -73,7 +76,7 @@
     "jest": "26.2.2",
     "postcss": "^8.3.4",
     "prettier": "2.2.1",
-    "tailwindcss": "^2.1.4",
+    "tailwindcss": "^3.0.15",
     "ts-jest": "26.5.5",
     "ts-node": "~9.1.1",
     "typescript": "~4.2.4"

@@ -29,45 +29,16 @@
       "projectType": "application",
       "targets": {
         "build": {
-          "executor": "@nrwl/web:build",
-          "outputs": ["{options.outputPath}"],
+          "executor": "@nrwl/workspace:run-commands",
+          "outputs": [],
           "options": {
-            "outputPath": "dist/apps/rant-web",
-            "index": "apps/rant-web/src/index.html",
-            "main": "apps/rant-web/src/main.tsx",
-            "polyfills": "apps/rant-web/src/polyfills.ts",
-            "tsConfig": "apps/rant-web/tsconfig.app.json",
-            "assets": [
-              "apps/rant-web/src/favicon.ico",
-              "apps/rant-web/src/assets"
+           "commands": [
+              "npm run tailwind:rant-web:prod",
+              "nx run rant-web:postBuild --configuration=production"
             ],
-            "styles": ["apps/rant-web/src/styles.scss"],
-            "scripts": [],
-            "webpackConfig": "@nrwl/react/plugins/webpack"
-          },
-          "configurations": {
-            "production": {
-              "fileReplacements": [
-                {
-                  "replace": "apps/rant-web/src/environments/environment.ts",
-                  "with": "apps/rant-web/src/environments/environment.prod.ts"
-                }
-              ],
-              "optimization": true,
-              "outputHashing": "all",
-              "sourceMap": false,
-              "extractCss": true,
-              "namedChunks": false,
-              "extractLicenses": true,
-              "vendorChunk": false,
-              "budgets": [
-                {
-                  "type": "initial",
-                  "maximumWarning": "500kb",
-                  "maximumError": "1mb"
-                }
-              ]
-            }
+            "parallel": false,
+            "maxWorkers": 2,
+            "memoryLimit": 512
           }
         },
         "postBuild": {
@@ -129,16 +100,20 @@
         "postServe": {
           "executor": "@nrwl/web:dev-server",
           "options": {
-            "buildTarget": "rant-web:postBuild",
             "port": 4000,
-            "host": "0.0.0.0"
+            "buildTarget": "rant-web:postBuild"
           },
           "configurations": {
             "production": {
               "buildTarget": "rant-web:postBuild:production"
             },
             "development": {
-              "buildTarget": "rant-web:postBuild:development"
+              "buildTarget": "rant-web:postBuild:development",
+              "host": "0.0.0.0",
+              "memoryLimit": 512,
+              "maxWorkers": 2,
+              "hmr":true,
+              "liveReload": true
             }
           }
         },
@@ -148,9 +123,7 @@
             "commands": [
               "npm run tailwind:rant-web:dev",
               "nx run rant-web:postServe --configuration=development"
-            ],
-            "hmr": true,
-            "liveReload": true
+            ]
           },
           "configurations": {
             "production": {
