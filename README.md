@@ -1,7 +1,7 @@
-#  __RANT__
+#  __RANT__ - Nx Monorepo boilerplate for building apps using MERN/PERN stack
 
 ![RANT LOGO](assets/rant-logo.png)
-### REAT - ANT Design - Nest.js - Tailwindcss 
+### React - Ant Design - Nest.js - Tailwindcss 
 ---
 
 > Boilerplate for building Web Apps using MERN/PERN. Generated using [Nx](https://nx.dev).
